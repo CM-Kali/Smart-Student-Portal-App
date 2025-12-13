@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-void main(){
-  runApp(MyApp());
+import 'app/pages/splash/splash_page.dart';
+
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,7 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
+      debugShowCheckedModeBanner: false,
+      title: 'Student Smart Portal',
+      home: const SplashPage(),
     );
   }
 }
