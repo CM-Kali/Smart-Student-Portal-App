@@ -1,24 +1,14 @@
 [
   {
-    "id": 1,
-    "name": "Mr. Uzair",
-    "email": "uzair@college.edu",
-    "phone": "+92-300-1234567",
-    "department": "App Development",
-    "qualification": "MS Computer Science",
-    "experience_years": 5,
-    "profile_image": "assets/images/teachers/uzair.png",
-    "courses_ids": [101, 102]
+    "id": "1",
+    "name": "Dr. Ahmed Khan",
+    "subject": "Artificial Intelligence",
+    "email": "ahmed@university.edu"
   },
   {
-    "id": 2,
-    "name": "Mrs. Majida",
-    "email": "majida@college.edu",
-    "phone": "+92-301-7654321",
-    "department": "Computer Science",
-    "qualification": "MPhil CS",
-    "experience_years": 8,
-    "profile_image": "assets/images/teachers/majida.png",
-    "courses_ids": [103]
+    "id": "2",
+    "name": "Ms. Sara Ali",
+    "subject": "Mobile App Development",
+    "email": "sara@university.edu"
   }
 ]
