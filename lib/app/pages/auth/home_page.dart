@@ -44,13 +44,13 @@ class HomePage extends StatelessWidget {
                     Get.to(() => CoursesPage());
                   }),
                   _dashboardCard('Teachers', Icons.person, () {
-                    Get.to(() => const TeachersPage());
+                    Get.to(() => TeachersPage());
                   }),
                   _dashboardCard('Timetable', Icons.schedule, () {
-                    Get.to(() => const TimetablePage());
+                    Get.to(() =>  TimetablePage());
                   }),
                   _dashboardCard('Attendance', Icons.check_circle, () {
-                    Get.to(() => const AttendancePage());
+                    Get.to(() =>  AttendancePage());
                   }),
                   _dashboardCard('Assignments', Icons.assignment, () {
                     Get.to(() => const AssignmentsPage());
