@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 12,
                 children: [
                   _dashboardCard('Courses', Icons.book, () {
-                    Get.to(() => const CoursesPage());
+                    Get.to(() => CoursesPage());
                   }),
                   _dashboardCard('Teachers', Icons.person, () {
                     Get.to(() => const TeachersPage());
@@ -62,8 +62,9 @@ class HomePage extends StatelessWidget {
                     Get.to(() => const SettingsPage());
                   }),
                   _dashboardCard('Chatbot', Icons.smart_toy, () {
-                    Get.to(() => const ChatbotPage());
+                    Get.to(() => ChatbotPage());
                   }),
+
                 ],
               ),
             ),

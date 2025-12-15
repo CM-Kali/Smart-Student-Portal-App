@@ -1,0 +1,28 @@
+[
+  {
+    "id": 101,
+    "title": "App Development",
+    "code": "APP-201",
+    "credit_hours": 3,
+    "semester": "5th",
+    "teacher_id": 1,
+    "description": "Learn Flutter-based mobile app development.",
+    "schedule": {
+      "day": "Monday",
+      "time": "10:00 AM - 12:00 PM"
+    }
+  },
+  {
+    "id": 103,
+    "title": "Data Structures & Algorithms",
+    "code": "CS-301",
+    "credit_hours": 4,
+    "semester": "5th",
+    "teacher_id": 2,
+    "description": "Core concepts of DSA with problem-solving.",
+    "schedule": {
+      "day": "Wednesday",
+      "time": "11:00 AM - 1:00 PM"
+    }
+  }
+]
