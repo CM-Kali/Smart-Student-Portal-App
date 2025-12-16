@@ -1,57 +1,45 @@
 import 'package:flutter/material.dart';
-import '../../models/assignment_model.dart';
+import 'package:get/get.dart';
+import '../../controllers/assignments_controller.dart';
 
 class AssignmentsPage extends StatelessWidget {
-  const AssignmentsPage({super.key});
+  AssignmentsPage({super.key});
+
+  final AssignmentsController controller =
+  Get.put(AssignmentsController());
 
   @override
   Widget build(BuildContext context) {
-    final List<AssignmentModel> assignments = [
-      AssignmentModel(
-        title: "AI Lab Report",
-        subject: "Artificial Intelligence",
-        dueDate: "20 Dec 2025",
-        isSubmitted: false,
-      ),
-      AssignmentModel(
-        title: "Flutter App",
-        subject: "App Development",
-        dueDate: "22 Dec 2025",
-        isSubmitted: true,
-      ),
-      AssignmentModel(
-        title: "Web Project",
-        subject: "Web Development",
-        dueDate: "25 Dec 2025",
-        isSubmitted: false,
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(title: const Text("Assignments")),
-      body: ListView.builder(
-        itemCount: assignments.length,
-        itemBuilder: (context, index) {
-          final assignment = assignments[index];
-          return Card(
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
-              title: Text(assignment.title),
-              subtitle: Text(
-                  "${assignment.subject}\nDue: ${assignment.dueDate}"),
-              isThreeLine: true,
-              trailing: Chip(
-                label: Text(
-                  assignment.isSubmitted ? "Submitted" : "Pending",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                backgroundColor: assignment.isSubmitted
-                    ? Colors.green
-                    : Colors.red,
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "AI Assignment",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-          );
-        },
+            const SizedBox(height: 20),
+
+            Obx(() => Text(
+              controller.selectedFileName.isEmpty
+                  ? "No file selected"
+                  : "Selected: ${controller.selectedFileName.value}",
+            )),
+
+            const SizedBox(height: 20),
+
+            ElevatedButton.icon(
+              icon: const Icon(Icons.upload_file),
+              label: const Text("Submit Assignment"),
+              onPressed: () {
+                controller.submitAssignment();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

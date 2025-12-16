@@ -53,13 +53,13 @@ class HomePage extends StatelessWidget {
                     Get.to(() =>  AttendancePage());
                   }),
                   _dashboardCard('Assignments', Icons.assignment, () {
-                    Get.to(() => const AssignmentsPage());
+                    Get.to(() => AssignmentsPage());
                   }),
                   _dashboardCard('Profile', Icons.account_circle, () {
-                    Get.to(() => const ProfilePage());
+                    Get.to(() =>  ProfilePage());
                   }),
                   _dashboardCard('Settings', Icons.settings, () {
-                    Get.to(() => const SettingsPage());
+                    Get.to(() => SettingsPage());
                   }),
                   _dashboardCard('Chatbot', Icons.smart_toy, () {
                     Get.to(() => ChatbotPage());
