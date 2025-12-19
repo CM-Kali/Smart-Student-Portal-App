@@ -2,12 +2,12 @@ class AssignmentModel {
   final String title;
   final String dueDate;
   bool isSubmitted;
-  String? filePath;
+  String? fileName;
 
   AssignmentModel({
     required this.title,
     required this.dueDate,
     this.isSubmitted = false,
-    this.filePath,
+    this.fileName,
   });
 }

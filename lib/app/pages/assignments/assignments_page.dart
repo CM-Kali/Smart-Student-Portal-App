@@ -12,43 +12,41 @@ class AssignmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Assignments")),
-      body: Obx(() => ListView.builder(
-        itemCount: controller.assignments.length,
-        itemBuilder: (context, index) {
-          final assignment = controller.assignments[index];
+      body: Obx(() {
+        return ListView.builder(
+          itemCount: controller.assignments.length,
+          itemBuilder: (context, index) {
+            final assignment = controller.assignments[index];
 
-          return Card(
-            margin: const EdgeInsets.all(8),
-            child: ListTile(
-              title: Text(assignment.title),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Due: ${assignment.dueDate}"),
-                  Text(
-                    assignment.isSubmitted
-                        ? "Status: Submitted"
-                        : "Status: Pending",
-                    style: TextStyle(
-                      color: assignment.isSubmitted
-                          ? Colors.green
-                          : Colors.red,
-                    ),
-                  ),
-                ],
+            return Card(
+              margin: const EdgeInsets.all(10),
+              child: ListTile(
+                title: Text(assignment.title),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Due: ${assignment.dueDate}"),
+                    if (assignment.fileName != null)
+                      Text("File: ${assignment.fileName}",
+                          style: const TextStyle(fontSize: 12)),
+                  ],
+                ),
+                trailing: assignment.isSubmitted
+                    ? const Chip(
+                  label: Text("Submitted"),
+                  backgroundColor: Colors.green,
+                )
+                    : ElevatedButton(
+                  onPressed: () {
+                    controller.submitAssignment(index);
+                  },
+                  child: const Text("Submit"),
+                ),
               ),
-              trailing: assignment.isSubmitted
-                  ? const Icon(Icons.check, color: Colors.green)
-                  : ElevatedButton(
-                onPressed: () {
-                  controller.submitAssignment(index);
-                },
-                child: const Text("Submit"),
-              ),
-            ),
-          );
-        },
-      )),
+            );
+          },
+        );
+      }),
     );
   }
 }
