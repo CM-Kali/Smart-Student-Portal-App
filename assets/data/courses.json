@@ -1,6 +1,6 @@
 [
   {
-    "id": 101,
+    "id":"1",
     "title": "App Development",
     "code": "APP-201",
     "credit_hours": 3,
@@ -13,7 +13,7 @@
     }
   },
   {
-    "id": 103,
+    "id": "2",
     "title": "Data Structures & Algorithms",
     "code": "CS-301",
     "credit_hours": 4,

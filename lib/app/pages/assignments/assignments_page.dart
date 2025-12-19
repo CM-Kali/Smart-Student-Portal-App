@@ -12,35 +12,43 @@ class AssignmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Assignments")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "AI Assignment",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      body: Obx(() => ListView.builder(
+        itemCount: controller.assignments.length,
+        itemBuilder: (context, index) {
+          final assignment = controller.assignments[index];
+
+          return Card(
+            margin: const EdgeInsets.all(8),
+            child: ListTile(
+              title: Text(assignment.title),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Due: ${assignment.dueDate}"),
+                  Text(
+                    assignment.isSubmitted
+                        ? "Status: Submitted"
+                        : "Status: Pending",
+                    style: TextStyle(
+                      color: assignment.isSubmitted
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+              trailing: assignment.isSubmitted
+                  ? const Icon(Icons.check, color: Colors.green)
+                  : ElevatedButton(
+                onPressed: () {
+                  controller.submitAssignment(index);
+                },
+                child: const Text("Submit"),
+              ),
             ),
-            const SizedBox(height: 20),
-
-            Obx(() => Text(
-              controller.selectedFileName.isEmpty
-                  ? "No file selected"
-                  : "Selected: ${controller.selectedFileName.value}",
-            )),
-
-            const SizedBox(height: 20),
-
-            ElevatedButton.icon(
-              icon: const Icon(Icons.upload_file),
-              label: const Text("Submit Assignment"),
-              onPressed: () {
-                controller.submitAssignment();
-              },
-            ),
-          ],
-        ),
-      ),
+          );
+        },
+      )),
     );
   }
 }

@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
+import '../models/assignment_model.dart';
 
 class AssignmentsController extends GetxController {
-  var selectedFileName = ''.obs;
+  var assignments = <AssignmentModel>[
+    AssignmentModel(title: "AI Assignment", dueDate: "20 Sep"),
+    AssignmentModel(title: "Flutter Project", dueDate: "25 Sep"),
+  ].obs;
 
-  Future<void> submitAssignment() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc', 'docx'],
-    );
+  Future<void> submitAssignment(int index) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      selectedFileName.value = result.files.single.name;
-      Get.snackbar("Success", "File Selected: ${selectedFileName.value}");
-    } else {
-      Get.snackbar("Cancelled", "No file selected");
+      assignments[index].filePath = result.files.single.path;
+      assignments[index].isSubmitted = true;
+      assignments.refresh();
     }
   }
 }
