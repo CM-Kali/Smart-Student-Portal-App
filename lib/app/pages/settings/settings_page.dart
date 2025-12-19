@@ -1,65 +1,116 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../routes/app_routes.dart';
+import '../../controllers/settings_controller.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+class SettingsPage extends StatelessWidget {
+  SettingsPage({super.key});
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  bool darkMode = false;
-  bool notifications = true;
+  final SettingsController controller = Get.put(SettingsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Settings")),
-      body: ListView(
-        children: [
-          SwitchListTile(
-            title: const Text("Dark Mode"),
-            value: darkMode,
-            onChanged: (val) {
-              setState(() {
-                darkMode = val;
-              });
-            },
-          ),
-          SwitchListTile(
-            title: const Text("Notifications"),
-            value: notifications,
-            onChanged: (val) {
-              setState(() {
-                notifications = val;
-              });
-            },
-          ),
-          const Divider(),
+      appBar: AppBar(
+        title: const Text("Settings"),
+        centerTitle: true,
+        elevation: 2,
+      ),
+      body: Obx(
+            () => SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Appearance",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
 
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text("About App"),
-            subtitle: const Text("Smart Student Portal v1.0"),
-            onTap: () {
-              Get.defaultDialog(
-                title: "About",
-                middleText:
-                "Smart Student Portal\nDeveloped by CMADEEL\nBSCS Project",
-              );
-            },
-          ),
+              // Dark Mode Card
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: SwitchListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 5),
+                  title: const Text(
+                    "Dark Mode",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  secondary: const Icon(Icons.dark_mode),
+                  value: controller.isDarkMode.value,
+                  onChanged: (val) => controller.toggleTheme(),
+                ),
+              ),
 
-          ListTile(
-            leading: const Icon(Icons.logout, color: Colors.red),
-            title: const Text("Logout"),
-            onTap: () {
-              Get.offAllNamed(AppRoutes.login);
-            },
+              const SizedBox(height: 30),
+              const Text(
+                "Account",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Logout Card
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.red),
+                  title: const Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                    ),
+                  ),
+                  onTap: () {
+                    // Logout logic
+                    Get.offAllNamed('/login');
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 30),
+              const Text(
+                "Other Settings",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Example: Notification Card
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: SwitchListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20, vertical: 5),
+                  title: const Text(
+                    "Notifications",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  secondary: const Icon(Icons.notifications),
+                  value: true, // dummy, you can control later
+                  onChanged: (val) {},
+                ),
+              ),
+
+              const SizedBox(height: 50), // Bottom spacing
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
