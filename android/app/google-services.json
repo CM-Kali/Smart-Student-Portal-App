@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "882920291946",
+    "project_id": "smartportal-5c501",
+    "storage_bucket": "smartportal-5c501.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882920291946:android:d04edc093d66c63541d413",
+        "android_client_info": {
+          "package_name": "com.example.smart_student_portal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDGVJ3HNxpG9ywkWTAHPIFkwKeIWbLk08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

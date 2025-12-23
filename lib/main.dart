@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app/pages/assignments/assignments_page.dart';
@@ -14,8 +15,13 @@ import 'app/pages/splash/splash_page.dart';
 import 'app/pages/teachers/teachers_page.dart';
 import 'app/pages/timetable/timetable_page.dart';
 import 'app/routes/app_routes.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

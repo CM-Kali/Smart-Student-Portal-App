@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/auth_controller.dart';
 
 class ForgotPage extends StatelessWidget {
-  const ForgotPage({super.key});
+  ForgotPage({super.key});
+
+  final AuthController controller = Get.find();
+  final email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Forgot Password')),
+      appBar: AppBar(title: const Text("Forgot Password")),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const Text(
-              'Enter your email to reset password',
-              style: TextStyle(fontSize: 16),
+            TextField(
+              controller: email,
+              decoration: const InputDecoration(labelText: "Email"),
             ),
             const SizedBox(height: 20),
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 24),
-
             ElevatedButton(
               onPressed: () {
-                Get.back();
+                controller.resetPassword(email.text.trim());
               },
-              child: const Text('Send Reset Link'),
+              child: const Text("Reset Password"),
             ),
           ],
         ),

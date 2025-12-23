@@ -1,48 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/auth_controller.dart';
 
 class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+  SignupPage({super.key});
+
+  final AuthController controller = Get.find();
+  final email = TextEditingController();
+  final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sign Up')),
+      appBar: AppBar(title: const Text("Sign Up")),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                border: OutlineInputBorder(),
-              ),
+              controller: email,
+              decoration: const InputDecoration(labelText: "Email"),
             ),
-            const SizedBox(height: 16),
-
+            const SizedBox(height: 10),
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            TextField(
+              controller: password,
               obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(labelText: "Password"),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
-            ElevatedButton(
+            Obx(() => controller.isLoading.value
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
               onPressed: () {
-                Get.back();
+                controller.signUp(
+                  email.text.trim(),
+                  password.text.trim(),
+                );
               },
-              child: const Text('Create Account'),
-            ),
+              child: const Text("Create Account"),
+            )),
           ],
         ),
       ),
