@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'app/controllers/auth_controller.dart';
 import 'app/pages/assignments/assignments_page.dart';
 import 'app/pages/attendance/attendance_page.dart';
 import 'app/pages/auth/forgot_page.dart';
@@ -22,6 +23,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: AppRoutes.splash, page: () => SplashPage()),
         GetPage(name: AppRoutes.login, page: () => LoginPage()),
-        GetPage(name: AppRoutes.signup, page: () => SignupPage()),
+        GetPage(name: AppRoutes.signup, page: () => SignUpPage()),
         GetPage(name: AppRoutes.forgot, page: () => ForgotPage()),
         GetPage(name: AppRoutes.home, page: () => HomePage()),
 

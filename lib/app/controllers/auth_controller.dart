@@ -1,56 +1,82 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  var isLoading = false.obs;
+  static AuthController instance = Get.find();
 
-  // SIGN UP
-  Future<void> signUp(String email, String password) async {
-    try {
-      isLoading.value = true;
-      await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      Get.offAllNamed('/home');
-    } on FirebaseAuthException catch (e) {
-      Get.snackbar("Signup Error", e.message ?? "Error");
-    } finally {
-      isLoading.value = false;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Rx<User?> firebaseUser = Rx<User?>(null);
+
+  @override
+  void onReady() {
+    super.onReady();
+    firebaseUser = Rx<User?>(auth.currentUser);
+    firebaseUser.bindStream(auth.userChanges());
+    ever(firebaseUser, _setInitialScreen);
+  }
+
+  _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAllNamed('/login'); // navigate to login if not logged in
+    } else {
+      Get.offAllNamed('/home'); // navigate to home if logged in
     }
   }
 
-  // LOGIN
-  Future<void> login(String email, String password) async {
+  // Signup + Firestore student record
+  void register(String name, String email, String password, String rollNo) async {
     try {
-      isLoading.value = true;
-      await _auth.signInWithEmailAndPassword(
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Get.offAllNamed('/home');
-    } on FirebaseAuthException catch (e) {
-      Get.snackbar("Login Error", e.message ?? "Error");
-    } finally {
-      isLoading.value = false;
-    }
-  }
 
-  // FORGOT PASSWORD
-  Future<void> resetPassword(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-      Get.snackbar("Success", "Password reset email sent");
-      Get.back();
+      await firestore.collection('students').doc(userCredential.user!.uid).set({
+        'name': name,
+        'email': email,
+        'roll_no': rollNo,
+        'profile_pic': '',
+        'attendance': [],
+        'courses': [],
+        'assignments': [],
+      });
+
+      Get.snackbar("Success", "Account created successfully");
+      Get.offAllNamed('/home');
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
   }
 
-  // LOGOUT
-  Future<void> logout() async {
-    await _auth.signOut();
-    Get.offAllNamed('/login');
+  // Login
+  void login(String email, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      // Firebase user stream will handle navigation
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  // Logout
+  void logout() async {
+    try {
+      await auth.signOut();
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  // Reset Password
+  void resetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      Get.snackbar("Success", "Password reset email sent");
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
   }
 }
