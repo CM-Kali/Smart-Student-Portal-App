@@ -26,7 +26,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // Signup + Firestore student record
+  /// Signup + Firestore student record
   void register(String name, String email, String password, String rollNo) async {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -38,10 +38,21 @@ class AuthController extends GetxController {
         'name': name,
         'email': email,
         'roll_no': rollNo,
+        'semester': "BSCS-6",
         'profile_pic': '',
-        'attendance': [],
-        'courses': [],
-        'assignments': [],
+        'subjects': [
+          "App Dev",
+          "Web Dev",
+          "AI Lab",
+          "AI Theory",
+          "Computer Networks",
+          "Computer Networks Lab",
+          "Technical Writing",
+          "Community Service"
+        ],
+        'assignments': [], // student assignments
+        'attendance': [],  // student attendance
+        'courses': [],     // student courses
       });
 
       Get.snackbar("Success", "Account created successfully");
@@ -51,7 +62,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // Login
+  /// Login
   void login(String email, String password) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -61,7 +72,7 @@ class AuthController extends GetxController {
     }
   }
 
-  // Logout
+  /// Logout
   void logout() async {
     try {
       await auth.signOut();
@@ -70,11 +81,42 @@ class AuthController extends GetxController {
     }
   }
 
-  // Reset Password
+  /// Reset Password
   void resetPassword(String email) async {
     try {
       await auth.sendPasswordResetEmail(email: email);
       Get.snackbar("Success", "Password reset email sent");
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
+  }
+
+  /// OPTIONAL: Update all existing students to full schema
+  void updateExistingStudents() async {
+    try {
+      QuerySnapshot snapshot = await firestore.collection('students').get();
+
+      for (var doc in snapshot.docs) {
+        await firestore.collection('students').doc(doc.id).update({
+          'semester': "BSCS-6",
+          'profile_pic': '',
+          'subjects': [
+            "App Dev",
+            "Web Dev",
+            "AI Lab",
+            "AI Theory",
+            "Computer Networks",
+            "Computer Networks Lab",
+            "Technical Writing",
+            "Community Service"
+          ],
+          'assignments': [],
+          'attendance': [],
+          'courses': [],
+        });
+      }
+
+      Get.snackbar("Success", "Existing students updated successfully");
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
