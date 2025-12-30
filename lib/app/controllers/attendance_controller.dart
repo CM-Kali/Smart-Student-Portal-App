@@ -31,13 +31,13 @@ class AttendanceController extends GetxController {
         var data = doc.data() as Map<String, dynamic>;
         if (!data.containsKey('attendance') || (data['attendance'] as List).isEmpty) {
           List<Map<String, dynamic>> initialAttendance = [
-            {"subject": "Web Dev", "present": 13, "total": 15},
+            {"subject": "Web Dev", "present": 6, "total": 15},
             {"subject": "AI Lab", "present": 10, "total": 12},
             {"subject": "AI Theory", "present": 11, "total": 12},
             {"subject": "Computer Networks", "present": 9, "total": 10},
             {"subject": "Computer Networks Lab", "present": 8, "total": 10},
-            {"subject": "Technical Writing", "present": 14, "total": 15},
-            {"subject": "Community Service", "present": 1, "total": 1},
+            {"subject": "Technical Writing", "present": 12, "total": 17},
+            {"subject": "Community Service", "present": 11, "total": 17},
           ];
 
           await firestore.collection('students').doc(uid).update({
