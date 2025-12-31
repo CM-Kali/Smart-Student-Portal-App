@@ -4,20 +4,30 @@ import 'package:get/get.dart';
 import '../models/teacher_model.dart';
 
 class TeachersController extends GetxController {
-  var teachers = <TeacherModel>[].obs;
-  var isLoading = true.obs;
+  RxList<TeacherModel> teachers = <TeacherModel>[].obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onInit() {
-    loadTeachers();
     super.onInit();
+    loadTeachers();
   }
 
   Future<void> loadTeachers() async {
-    final String response =
-    await rootBundle.loadString('assets/data/teachers.json');
-    final List data = json.decode(response);
-    teachers.value = data.map((e) => TeacherModel.fromJson(e)).toList();
-    isLoading.value = false;
+    try {
+      final String response =
+      await rootBundle.loadString('assets/data/teachers.json');
+
+      final List<dynamic> data = jsonDecode(response);
+
+      teachers.assignAll(
+        data.map((e) => TeacherModel.fromJson(e)).toList(),
+      );
+    } catch (e) {
+      Get.snackbar("Error", "Failed to load teachers");
+      print("Teachers Load Error: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 }
