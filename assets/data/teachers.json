@@ -1,14 +1,20 @@
 [
   {
     "id": "1",
-    "name": "Waqas Mehmood",
+    "name": "Waqassss Mehmood",
     "subject": "Artificial Intelligence",
-    "email": "waqs@university.edu"
+    "email": "waqsssss@university.edu"
   },
   {
     "id": "2",
     "name": "Uzair Hussian",
     "subject": "Mobile App Development",
     "email": "uzair@university.edu"
+  },
+  {
+    "id": "3",
+    "name": "Hussain Gallani",
+    "subject": "Web Dev",
+    "email": "hussain@university.edu"
   }
 ]

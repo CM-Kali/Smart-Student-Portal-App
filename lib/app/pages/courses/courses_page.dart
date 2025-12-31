@@ -16,16 +16,45 @@ class CoursesPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
+        if (controller.courses.isEmpty) {
+          return const Center(child: Text("No courses found"));
+        }
+
         return ListView.builder(
+          padding: const EdgeInsets.all(16),
           itemCount: controller.courses.length,
           itemBuilder: (context, index) {
             final course = controller.courses[index];
+
             return Card(
-              margin: const EdgeInsets.all(8),
-              child: ListTile(
-                title: Text(course.name),
-                subtitle: Text("Instructor: ${course.instructor}"),
-                trailing: Text("${course.credits} Cr"),
+              elevation: 4,
+              margin: const EdgeInsets.only(bottom: 16),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      course.title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text("Code: ${course.code}"),
+                    Text("Credits: ${course.creditHours}"),
+                    Text("Semester: ${course.semester}"),
+                    const SizedBox(height: 6),
+                    Text(
+                      course.description,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    const Divider(),
+                    Text("📅 ${course.day}"),
+                    Text("⏰ ${course.time}"),
+                  ],
+                ),
               ),
             );
           },
