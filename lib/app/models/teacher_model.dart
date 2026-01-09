@@ -17,7 +17,7 @@ class TeacherModel {
 
   factory TeacherModel.fromJson(Map<String, dynamic> json) {
     return TeacherModel(
-      id: json['id'],
+      id: json['id'].toString(),
       name: json['name'],
       subject: json['subject'],
       email: json['email'],
