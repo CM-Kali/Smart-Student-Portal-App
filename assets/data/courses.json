@@ -4,25 +4,104 @@
     "title": "App Development",
     "code": "APP-201",
     "credit_hours": 3,
-    "semester": "5th",
+    "semester": "6th",
     "teacher_id": 1,
     "description": "Learn Flutter-based mobile app development.",
     "schedule": {
-      "day": "Monday",
-      "time": "10:00 AM - 12:00 PM"
+      "day": "Wednesday",
+      "time": "9:15 AM - 11:45 AM"
     }
   },
   {
     "id": "2",
-    "title": "Data Structures & Algorithms",
+    "title": "Technical Writing",
     "code": "CS-301",
-    "credit_hours": 4,
-    "semester": "5th",
+    "credit_hours": 3,
+    "semester": "6th",
     "teacher_id": 2,
-    "description": "Core concepts of DSA with problem-solving.",
+    "description": "Technical writing, report writing.",
+    "schedule": {
+      "day": "Monday",
+      "time": "11:45 AM - 2:25 PM"
+    }
+  },
+  {
+    "id":"3",
+    "title": "Web Development",
+    "code": "Web-401",
+    "credit_hours": 3,
+    "semester": "6th",
+    "teacher_id": 3,
+    "description": "Learn Web development.",
+    "schedule": {
+      "day": "Thursday",
+      "time": "09:15 AM - 11:45 AM"
+    }
+  },
+  {
+    "id":"4",
+    "title": "Aritificial Intellegnece",
+    "code": "Ai-501",
+    "credit_hours": 3,
+    "semester": "6th",
+    "teacher_id": 4,
+    "description": "Learn Machine learning and Model traning.",
     "schedule": {
       "day": "Wednesday",
-      "time": "11:00 AM - 1:00 PM"
+      "time": "11:45 AM - 02:25 PM"
+    }
+  },
+
+  {
+    "id":"5",
+    "title": "Computer Network Lab",
+    "code": "CN-601",
+    "credit_hours": 1,
+    "semester": "6th",
+    "teacher_id": 5,
+    "description": "Learn Networking and Cisco PAcket Tracer",
+    "schedule": {
+      "day": "Monday",
+      "time": "09:15 AM - 11:45 PM"
+    }
+  },
+  {
+    "id":"6",
+    "title": "Community Service",
+    "code": "CC-501",
+    "credit_hours": 1,
+    "semester": "6th",
+    "teacher_id": 6,
+    "description": "Community service lessons ",
+    "schedule": {
+      "day": "Tuesday",
+      "time": "09:15 AM - 11:00 AM"
+    }
+  },
+  {
+    "id":"7",
+    "title": "Computer Network",
+    "code": "CN-701",
+    "credit_hours": 3,
+    "semester": "6th",
+    "teacher_id": 7,
+    "description": "Networking Theory ",
+    "schedule": {
+      "day": "Thursday",
+      "time": "11:45 PM - 02:25 PM"
+    }
+  },
+  {
+    "id":"8",
+    "title": "AI Lab",
+    "code": "ai-001",
+    "credit_hours": 1,
+    "semester": "6th",
+    "teacher_id": 4,
+    "description": "ML and DL lab ",
+    "schedule": {
+      "day": "Tuesday",
+      "time": "11: 45 AM - 02:25 PM"
     }
   }
 ]

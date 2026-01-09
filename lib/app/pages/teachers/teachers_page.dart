@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_student_portal/app/controllers/teachers_controller.dart';
-import 'package:smart_student_portal/app/utils/email_launcher.dart';
+import 'package:smart_student_portal/app/pages/teachers/teacher_detail_page.dart'; // Add this import
 
 class TeachersPage extends StatelessWidget {
   TeachersPage({super.key});
@@ -37,9 +37,14 @@ class TeachersPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
+                // Update leading to show actual photo
                 leading: CircleAvatar(
-                  backgroundColor: Colors.blue.shade100,
-                  child: const Icon(Icons.person, color: Colors.blue),
+                  radius: 25,
+                  backgroundImage: AssetImage(teacher.photo),
+                  onBackgroundImageError: (_, __) {},
+                  child: teacher.photo.isEmpty
+                      ? const Icon(Icons.person, color: Colors.blue)
+                      : null,
                 ),
                 title: Text(
                   teacher.name,
@@ -52,17 +57,11 @@ class TeachersPage extends StatelessWidget {
                   teacher.subject,
                   style: const TextStyle(color: Colors.grey),
                 ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.email, color: Colors.blue),
-                  onPressed: () {
-                    EmailLauncher.openEmail(
-                      email: teacher.email,
-                      subject: 'Regarding ${teacher.subject}',
-                      body:
-                      'Hello ${teacher.name},\n\nI want to discuss about ${teacher.subject}.\n\nThanks.',
-                    );
-                  },
-                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                // Add onTap to navigate to detail page
+                onTap: () {
+                  Get.to(() => TeacherDetailPage(teacher: teacher));
+                },
               ),
             );
           },

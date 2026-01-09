@@ -1,20 +1,58 @@
 [
   {
     "id": "1",
-    "name": "Waqassss Mehmood",
-    "subject": "Artificial Intelligence",
-    "email": "waqsssss@university.edu"
+    "name": "Uzair Hussain",
+    "subject": "App Development",
+    "email": "uzair12@gmail.com",
+    "photo": "assets/images/uzair.jpg",
+    "introduction": "Expert in Android and Mobile App Development with 5+ years of experience. Passionate about teaching modern development practices."
   },
   {
     "id": "2",
-    "name": "Uzair Hussian",
-    "subject": "Mobile App Development",
-    "email": "uzair@university.edu"
+    "name": "Raina Gillani",
+    "subject": "Technical Writing",
+    "email": "Raina12@gmail.com",
+    "photo": "assets/images/raina.jpg",
+    "introduction": "Professional technical writer specializing in documentation and communication skills for developers."
   },
   {
     "id": "3",
     "name": "Hussain Gallani",
     "subject": "Web Dev",
-    "email": "hussain@university.edu"
+    "email": "hussain12@gmail.com",
+    "photo": "assets/images/hussain.jpg",
+    "introduction": "Full-stack web developer with expertise in React, Node.js, and modern web technologies."
+  },
+  {
+    "id": "4",
+    "name": "Waqas Mehmood",
+    "subject": "Artificial Intelligence",
+    "email": "waqass12@gmail.com",
+    "photo": "assets/images/teachers/waqas.jpg",
+    "introduction": "AI researcher and practitioner focusing on Machine Learning and Deep Learning applications."
+  },
+  {
+    "id": "5",
+    "name": "Nayab",
+    "subject": "Computer Networks Lab",
+    "email": "nayab12@gmail.com",
+    "photo": "assets/images/teachers/nayab.jpg",
+    "introduction": "Network specialist with hands-on experience in network configuration and troubleshooting."
+  },
+  {
+    "id": "6",
+    "name": "Rehman Gul",
+    "subject": "Community Service",
+    "email": "rehmangu12@gmail.com",
+    "photo": "assets/images/teachers/rehman.jpg",
+    "introduction": "Dedicated to community engagement and social responsibility development among students."
+  },
+  {
+    "id": "7",
+    "name": "Qadeer",
+    "subject": "Computer Networks",
+    "email": "qadeer12@gmail.com",
+    "photo": "assets/images/qadeer.jpeg",
+    "introduction": "Computer Networks expert with deep knowledge in protocols, security, and network architecture."
   }
 ]
