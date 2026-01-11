@@ -13,103 +13,124 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Settings"),
         centerTitle: true,
-        elevation: 2,
       ),
-      body: Obx(
-            () => SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Appearance",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Appearance Section
+            const Text(
+              "Appearance",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
 
-              // Dark Mode Card
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: SwitchListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 5),
-                  title: const Text(
-                    "Dark Mode",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  secondary: const Icon(Icons.dark_mode),
-                  value: controller.isDarkMode.value,
-                  onChanged: (val) => controller.toggleTheme(),
-                ),
+            Obx(() => Card(
+              child: SwitchListTile(
+                title: const Text("Dark Mode"),
+                subtitle: const Text("Enable dark theme"),
+                secondary: const Icon(Icons.dark_mode),
+                value: controller.isDarkMode.value,
+                onChanged: (val) => controller.toggleTheme(),
               ),
+            )),
 
-              const SizedBox(height: 30),
-              const Text(
-                "Account",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            const SizedBox(height: 30),
+
+            // Notifications Section
+            const Text(
+              "Notifications",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            Obx(() => Card(
+              child: SwitchListTile(
+                title: const Text("Notifications"),
+                subtitle: const Text("Enable notifications"),
+                secondary: const Icon(Icons.notifications),
+                value: controller.notificationsEnabled.value,
+                onChanged: (val) => controller.toggleNotifications(val),
               ),
-              const SizedBox(height: 10),
+            )),
 
-              // Logout Card
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: ListTile(
-                  leading: const Icon(Icons.logout, color: Colors.red),
-                  title: const Text(
-                    "Logout",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.red,
+            const SizedBox(height: 30),
+
+            // Account Section
+            const Text(
+              "Account",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.lock, color: Colors.blue),
+                title: const Text("Change Password"),
+                subtitle: const Text("Update your password"),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Get.snackbar(
+                    "Coming Soon",
+                    "This feature will be available soon",
+                  );
+                },
+              ),
+            ),
+
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.privacy_tip, color: Colors.green),
+                title: const Text("Privacy Policy"),
+                subtitle: const Text("Read our privacy policy"),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  Get.snackbar(
+                    "Privacy Policy",
+                    "Opening privacy policy...",
+                  );
+                },
+              ),
+            ),
+
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.info, color: Colors.orange),
+                title: const Text("About"),
+                subtitle: const Text("App version 1.0.0"),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("About"),
+                      content: const Text(
+                        "Smart Student Portal\nVersion 1.0.0\n\n© 2025 All rights reserved",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("Close"),
+                        ),
+                      ],
                     ),
-                  ),
-                  onTap: () {
-                    // Logout logic
-                    Get.offAllNamed('/login');
-                  },
-                ),
+                  );
+                },
               ),
+            ),
 
-              const SizedBox(height: 30),
-              const Text(
-                "Other Settings",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text("Logout"),
+                subtitle: const Text("Sign out of your account"),
+                onTap: () => controller.logout(),
               ),
-              const SizedBox(height: 10),
+            ),
 
-              // Example: Notification Card
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: SwitchListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 5),
-                  title: const Text(
-                    "Notifications",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  secondary: const Icon(Icons.notifications),
-                  value: true, // dummy, you can control later
-                  onChanged: (val) {},
-                ),
-              ),
-
-              const SizedBox(height: 50), // Bottom spacing
-            ],
-          ),
+            const SizedBox(height: 30),
+          ],
         ),
       ),
     );
