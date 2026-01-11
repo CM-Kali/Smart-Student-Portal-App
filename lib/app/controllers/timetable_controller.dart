@@ -5,19 +5,28 @@ import '../models/timetable_model.dart';
 import '../models/teacher_model.dart';
 
 class TimetableController extends GetxController {
-  RxList<TimetableModel> courses = <TimetableModel>[].obs;
-  RxList<TeacherModel> teachers = <TeacherModel>[].obs;
-  RxBool isLoading = true.obs;
-  RxString selectedDay = 'All'.obs;
 
-  final List<String> weekDays = [
+  /// List of all courses
+  final RxList<TimetableModel> courses = <TimetableModel>[].obs;
+
+  /// List of all teachers
+  final RxList<TeacherModel> teachers = <TeacherModel>[].obs;
+
+  /// Loading indicator
+  final RxBool isLoading = true.obs;
+
+  /// Selected day for filtering
+  final RxString selectedDay = 'All'.obs;
+
+  /// Days of the week (reactive)
+  final RxList<String> weekDays = <String>[
     'All',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
-    'Friday'
-  ];
+    'Friday',
+  ].obs;
 
   @override
   void onInit() {
@@ -25,20 +34,25 @@ class TimetableController extends GetxController {
     loadData();
   }
 
+
   Future<void> loadData() async {
     try {
-      // Load courses
+      isLoading.value = true;
+
+      // Load courses JSON
       final String coursesResponse =
       await rootBundle.loadString('assets/data/courses.json');
       final List<dynamic> coursesData = jsonDecode(coursesResponse);
+
       courses.assignAll(
         coursesData.map((e) => TimetableModel.fromJson(e)).toList(),
       );
 
-      // Load teachers
+      // Load teachers JSON
       final String teachersResponse =
       await rootBundle.loadString('assets/data/teachers.json');
       final List<dynamic> teachersData = jsonDecode(teachersResponse);
+
       teachers.assignAll(
         teachersData.map((e) => TeacherModel.fromJson(e)).toList(),
       );
@@ -50,31 +64,48 @@ class TimetableController extends GetxController {
     }
   }
 
-  // Get teacher by ID
+  /// ================================
+  /// BUSINESS LOGIC
+  /// ================================
+
+  /// Get teacher by ID safely
   TeacherModel? getTeacherById(int id) {
     try {
-      return teachers.firstWhere((teacher) => teacher.id == id.toString());
-    } catch (e) {
+      return teachers.firstWhere((teacher) => teacher.id == id);
+    } catch (_) {
       return null;
     }
   }
 
-  // Get courses by day
+  /// Get courses filtered by selected day
   List<TimetableModel> getCoursesByDay(String day) {
     if (day == 'All') return courses;
     return courses.where((course) => course.schedule.day == day).toList();
   }
 
-  // Get courses sorted by day
+  /// Get courses grouped by day (useful for full timetable)
   Map<String, List<TimetableModel>> getCoursesByDayGrouped() {
     Map<String, List<TimetableModel>> grouped = {};
     for (var day in weekDays.skip(1)) {
-      // Skip 'All'
+      // Skip "All"
       grouped[day] = courses
           .where((course) => course.schedule.day == day)
           .toList()
         ..sort((a, b) => a.schedule.time.compareTo(b.schedule.time));
     }
     return grouped;
+  }
+
+
+
+  /// Check if courses list is empty
+  bool get isEmpty => courses.isEmpty;
+
+  /// Total courses count
+  int get totalCourses => courses.length;
+
+  /// Set selected day
+  void setSelectedDay(String day) {
+    selectedDay.value = day;
   }
 }

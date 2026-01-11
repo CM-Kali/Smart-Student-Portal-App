@@ -40,22 +40,26 @@ class TimetablePage extends StatelessWidget {
           itemCount: controller.weekDays.length,
           itemBuilder: (context, index) {
             final day = controller.weekDays[index];
-            final isSelected = controller.selectedDay.value == day;
+            // Check selected properly
+            final bool isSelected = controller.selectedDay.value == day;
+
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: ChoiceChip(
                 label: Text(day),
                 selected: isSelected,
-                onSelected: (selected) {
-                  if (selected) {
-                    controller.selectedDay.value = day;
-                  }
-                },
                 selectedColor: Colors.blue,
+                backgroundColor: Colors.grey[200],
                 labelStyle: TextStyle(
                   color: isSelected ? Colors.white : Colors.black87,
                   fontWeight: FontWeight.bold,
                 ),
+                onSelected: (selected) {
+                  // Only update if not already selected
+                  if (selected) {
+                    controller.setSelectedDay(day);
+                  }
+                },
               ),
             );
           },
@@ -63,6 +67,7 @@ class TimetablePage extends StatelessWidget {
       }),
     );
   }
+
 
   // Separate reactive widget for course list
   Widget _buildCourseList(BuildContext context) {
@@ -82,8 +87,9 @@ class TimetablePage extends StatelessWidget {
 
       // No classes for selected day
       if (filteredCourses.isEmpty) {
-        return _buildEmptyState();
+        return _buildEmptyState(controller.selectedDay.value);
       }
+
 
       // Course list
       return ListView.builder(
@@ -99,22 +105,22 @@ class TimetablePage extends StatelessWidget {
   }
 
   // Non-reactive empty state widget
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(String day) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.event_busy, size: 80, color: Colors.grey[400]),
           const SizedBox(height: 16),
-      Text(
-        "No classes on ${controller.selectedDay.value}",
-        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
-
+          Text(
+            "No classes on $day", // ✅ NO Rx here
+            style: TextStyle(fontSize: 18, color: Colors.grey[600]),
           ),
         ],
       ),
     );
   }
+
 
   // Non-reactive course card widget
   Widget _buildCourseCard(BuildContext context, course, teacher) {
@@ -260,32 +266,26 @@ class TimetablePage extends StatelessWidget {
                 ),
 
               // Day Badge (only show when "All" is selected)
-              Obx(() {
-                if (controller.selectedDay.value == 'All') {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.purple.shade50,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        course.schedule.day,
-                        style: TextStyle(
-                          color: Colors.purple.shade700,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
+              if (controller.selectedDay.value == 'All')
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.purple.shade50,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      course.schedule.day,
+                      style: TextStyle(
+                        color: Colors.purple.shade700,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
                       ),
                     ),
-                  );
-                }
-                return const SizedBox.shrink();
-              }),
+                  ),
+                ),
+
             ],
           ),
         ),
