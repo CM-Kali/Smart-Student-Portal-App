@@ -28,7 +28,7 @@ class CoursesController extends GetxController {
       Get.snackbar("Error", "Failed to load courses");
       print("Course load error: $e");
     } finally {
-      isLoading.value = false; // 🔴 THIS WAS MISSING LOGICALLY
+      isLoading.value = false;
     }
   }
 }

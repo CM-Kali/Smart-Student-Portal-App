@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_student_portal/app/controllers/teachers_controller.dart';
-import 'package:smart_student_portal/app/pages/teachers/teacher_detail_page.dart'; // Add this import
+import 'package:smart_student_portal/app/pages/teachers/teacher_detail_page.dart';
+
 
 class TeachersPage extends StatelessWidget {
   TeachersPage({super.key});
@@ -17,6 +18,7 @@ class TeachersPage extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
+
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -58,7 +60,6 @@ class TeachersPage extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-                // Add onTap to navigate to detail page
                 onTap: () {
                   Get.to(() => TeacherDetailPage(teacher: teacher));
                 },
@@ -70,3 +71,6 @@ class TeachersPage extends StatelessWidget {
     );
   }
 }
+
+
+

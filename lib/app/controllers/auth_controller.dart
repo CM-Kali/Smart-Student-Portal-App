@@ -20,9 +20,9 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAllNamed('/login'); // navigate to login if not logged in
+      Get.offAllNamed('/login');
     } else {
-      Get.offAllNamed('/home'); // navigate to home if logged in
+      Get.offAllNamed('/home');
     }
   }
 

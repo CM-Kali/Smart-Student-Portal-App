@@ -3,8 +3,8 @@ class TeacherModel {
   final String name;
   final String subject;
   final String email;
-  final String photo; // Add this
-  final String introduction; // Add this
+  final String photo;
+  final String introduction;
 
   TeacherModel({
     required this.id,
@@ -21,7 +21,7 @@ class TeacherModel {
       name: json['name'],
       subject: json['subject'],
       email: json['email'],
-      photo: json['photo'] ?? 'assets/images/default_teacher.png', // Default photo
+      photo: json['photo'] ?? 'assets/images/default_teacher.png',
       introduction: json['introduction'] ?? 'No introduction available',
     );
   }

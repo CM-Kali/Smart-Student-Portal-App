@@ -28,25 +28,23 @@ void main() async{
   Get.put(AuthController());
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light, // default
+      themeMode: ThemeMode.light,
       initialRoute: AppRoutes.splash,
       getPages: [
+
         GetPage(name: AppRoutes.splash, page: () => SplashPage()),
         GetPage(name: AppRoutes.login, page: () => LoginPage()),
         GetPage(name: AppRoutes.signup, page: () => SignUpPage()),
         GetPage(name: AppRoutes.forgot, page: () => ForgotPage()),
         GetPage(name: AppRoutes.home, page: () => HomePage()),
-
         GetPage(name: AppRoutes.courses, page: () => CoursesPage()),
         GetPage(name: AppRoutes.teachers, page: () => TeachersPage()),
         GetPage(name: AppRoutes.timetable, page: () => TimetablePage()),
@@ -57,6 +55,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: AppRoutes.chatbot, page: () => ChatbotPage()),
       ],
     );
-
   }
 }
+
+
