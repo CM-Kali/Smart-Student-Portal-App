@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
 import 'app/controllers/auth_controller.dart';
 import 'app/pages/assignments/assignments_page.dart';
 import 'app/pages/attendance/attendance_page.dart';
@@ -17,19 +19,27 @@ import 'app/pages/teachers/teachers_page.dart';
 import 'app/pages/timetable/timetable_page.dart';
 import 'app/routes/app_routes.dart';
 import 'firebase_options.dart';
-import 'package:get_storage/get_storage.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
+
+  // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Get.put(AuthController());
+
+  // Initialize GetStorage
+  await GetStorage.init();
+
+  // Put AuthController as permanent
+  Get.put(AuthController(), permanent: true);
+
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -39,23 +49,20 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       initialRoute: AppRoutes.splash,
       getPages: [
-
-        GetPage(name: AppRoutes.splash, page: () => SplashPage()),
-        GetPage(name: AppRoutes.login, page: () => LoginPage()),
-        GetPage(name: AppRoutes.signup, page: () => SignUpPage()),
-        GetPage(name: AppRoutes.forgot, page: () => ForgotPage()),
-        GetPage(name: AppRoutes.home, page: () => HomePage()),
-        GetPage(name: AppRoutes.courses, page: () => CoursesPage()),
-        GetPage(name: AppRoutes.teachers, page: () => TeachersPage()),
-        GetPage(name: AppRoutes.timetable, page: () => TimetablePage()),
-        GetPage(name: AppRoutes.attendance, page: () => AttendancePage()),
-        GetPage(name: AppRoutes.assignments, page: () => AssignmentsPage()),
+        GetPage(name: AppRoutes.splash, page: () => const SplashPage()),
+        GetPage(name: AppRoutes.login, page: () =>  LoginPage()),
+        GetPage(name: AppRoutes.signup, page: () =>  SignUpPage()),
+        GetPage(name: AppRoutes.forgot, page: () =>  ForgotPage()),
+        GetPage(name: AppRoutes.home, page: () => const HomePage()),
+        GetPage(name: AppRoutes.courses, page: () =>  CoursesPage()),
+        GetPage(name: AppRoutes.teachers, page: () =>  TeachersPage()),
+        GetPage(name: AppRoutes.timetable, page: () =>  TimetablePage()),
+        GetPage(name: AppRoutes.attendance, page: () => const AttendancePage()),
+        GetPage(name: AppRoutes.assignments, page: () =>  AssignmentsPage()),
         GetPage(name: AppRoutes.profile, page: () => ProfilePage()),
-        GetPage(name: AppRoutes.settings, page: () => SettingsPage()),
-        GetPage(name: AppRoutes.chatbot, page: () => ChatbotPage()),
+        GetPage(name: AppRoutes.settings, page: () =>  SettingsPage()),
+        GetPage(name: AppRoutes.chatbot, page: () =>  ChatbotPage()),
       ],
     );
   }
 }
-
-

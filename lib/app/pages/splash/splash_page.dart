@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../auth/login_page.dart';
+import '../../controllers/auth_controller.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -16,9 +14,8 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 4), () {
-      Get.off(() => LoginPage());
-    });
+    // Check auth and redirect after 3 seconds
+    AuthController.to.checkAuthAndRedirect();
   }
 
   @override
@@ -30,9 +27,9 @@ class _SplashPageState extends State<SplashPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue[900]!,
-              Colors.blue[700]!,
-              Colors.blue[500]!,
+              Colors.blue.shade900,
+              Colors.blue.shade700,
+              Colors.blue.shade500,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -40,9 +37,8 @@ class _SplashPageState extends State<SplashPage> {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Graduation Cap Icon with glow effect
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -69,10 +65,7 @@ class _SplashPageState extends State<SplashPage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
-              // Main Title
               const Text(
                 'Student Smart Portal',
                 style: TextStyle(
@@ -83,15 +76,9 @@ class _SplashPageState extends State<SplashPage> {
                 ),
                 textAlign: TextAlign.center,
               ),
-
               const SizedBox(height: 12),
-
-              // Subtitle - KICSIT LMS
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 8,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20),
@@ -110,10 +97,7 @@ class _SplashPageState extends State<SplashPage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 60),
-
-              // Loading indicator
               const SizedBox(
                 width: 40,
                 height: 40,

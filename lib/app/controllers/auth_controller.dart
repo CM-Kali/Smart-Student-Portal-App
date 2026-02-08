@@ -3,42 +3,31 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  static AuthController instance = Get.find();
+  static AuthController get to => Get.find();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  /// Firebase user state
-  Rx<User?> firebaseUser = Rx<User?>(null);
-
-  @override
-  void onReady() {
-    super.onReady();
-    firebaseUser.bindStream(auth.userChanges());
+  /// ✅ Check Auth and Redirect (called from Splash)
+  Future<void> checkAuthAndRedirect() async {
+    await Future.delayed(const Duration(seconds: 3));
+    final user = auth.currentUser;
+    if (user == null) {
+      Get.offAllNamed('/login');
+    } else {
+      Get.offAllNamed('/home');
+    }
   }
 
-  /// Simple login check (used by Splash)
-  bool get isLoggedIn => firebaseUser.value != null;
-
-  // ---------------- AUTH METHODS ----------------
-
-  /// Register user + create Firestore record
-  Future<void> register(
-      String name,
-      String email,
-      String password,
-      String rollNo,
-      ) async {
+  /// REGISTER
+  Future<void> register(String name, String email, String password, String rollNo) async {
     try {
-      UserCredential userCredential =
-      await auth.createUserWithEmailAndPassword(
+      final userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      await firestore.collection('students')
-          .doc(userCredential.user!.uid)
-          .set({
+      await firestore.collection('students').doc(userCredential.user!.uid).set({
         'name': name,
         'email': email,
         'roll_no': rollNo,
@@ -57,78 +46,37 @@ class AuthController extends GetxController {
         'assignments': [],
         'attendance': [],
         'courses': [],
+        'created_at': FieldValue.serverTimestamp(),
       });
 
+      Get.offAllNamed('/home');
       Get.snackbar("Success", "Account created successfully");
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
   }
 
-  /// Login
+  /// LOGIN
   Future<void> login(String email, String password) async {
     try {
-      await auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      Get.offAllNamed('/home');
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
   }
 
-  /// Logout
+  /// LOGOUT
   Future<void> logout() async {
-    try {
-      await auth.signOut();
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    }
+    await auth.signOut();
+    Get.offAllNamed('/login');
   }
 
-  /// Reset Password ✅ (KEPT)
+  /// RESET PASSWORD
   Future<void> resetPassword(String email) async {
     try {
       await auth.sendPasswordResetEmail(email: email);
-      Get.snackbar(
-        "Success",
-        "Password reset email sent. Check your inbox.",
-      );
-    } catch (e) {
-      Get.snackbar("Error", e.toString());
-    }
-  }
-
-  /// OPTIONAL: Update existing students
-  Future<void> updateExistingStudents() async {
-    try {
-      QuerySnapshot snapshot =
-      await firestore.collection('students').get();
-
-      for (var doc in snapshot.docs) {
-        await firestore.collection('students').doc(doc.id).update({
-          'semester': "BSCS-6",
-          'profile_pic': '',
-          'subjects': [
-            "App Dev",
-            "Web Dev",
-            "AI Lab",
-            "AI Theory",
-            "Computer Networks",
-            "Computer Networks Lab",
-            "Technical Writing",
-            "Community Service"
-          ],
-          'assignments': [],
-          'attendance': [],
-          'courses': [],
-        });
-      }
-
-      Get.snackbar(
-        "Success",
-        "Existing students updated successfully",
-      );
+      Get.snackbar("Success", "Password reset email sent");
     } catch (e) {
       Get.snackbar("Error", e.toString());
     }
